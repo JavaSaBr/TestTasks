@@ -1,0 +1,8 @@
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
+
+rootProject.name = 'JavaSaBr-Test-Device-API'
+
+include 'test-support'
+include 'device-rest'
+include 'device-model'
+include 'device-service'

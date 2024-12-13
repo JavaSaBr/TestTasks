@@ -1,0 +1,11 @@
+apply plugin: "org.springframework.boot"
+
+dependencies {
+    implementation projects.deviceService
+    implementation libs.ip.adress
+    implementation libs.reactor.core
+    implementation libs.bundles.jackson
+    implementation libs.bundles.springboot.starter.reactive
+    
+    testImplementation projects.testSupport
+}
