@@ -11,7 +11,7 @@ import static javasabr.device.rest.DeviceRestConstants.R_DEVICE
 class DeviceRegisterHandlerTest extends RestSpecification {
   
   @Autowired
-  DeviceService deviceService;
+  DeviceService deviceService
   
   def "should register new device"(NetworkDeviceType deviceType, String macAddress) {
     when:

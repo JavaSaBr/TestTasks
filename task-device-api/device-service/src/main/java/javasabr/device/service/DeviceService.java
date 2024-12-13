@@ -1,5 +1,6 @@
 package javasabr.device.service;
 
+import java.util.SortedSet;
 import javasabr.device.model.NetworkDevice;
 import javasabr.device.model.NetworkDeviceType;
 import javasabr.device.service.exception.DeviceIsAlreadyRegisteredException;
@@ -18,5 +19,10 @@ public interface DeviceService {
       @NotNull String macAddress,
       @Nullable String uplinkMacAddress) throws DeviceIsAlreadyRegisteredException, UplinkDeviceNotFoundException;
 
+  /**
+   * @return null is such device does not exist
+   */
   @Nullable NetworkDevice getByMacAddress(@NotNull String macAddress);
+
+  @NotNull SortedSet<NetworkDevice> getAllDevices();
 }

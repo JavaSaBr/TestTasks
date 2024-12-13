@@ -1,5 +1,7 @@
 package javasabr.device.service.impl;
 
+import java.util.SortedSet;
+import java.util.TreeSet;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import javasabr.device.model.AccessPointNetworkDevice;
@@ -52,6 +54,11 @@ public class InMemoryDeviceService implements DeviceService {
   @Override
   public @Nullable NetworkDevice getByMacAddress(@NotNull String macAddress) {
     return registeredDevices.get(macAddress);
+  }
+
+  @Override
+  public @NotNull SortedSet<NetworkDevice> getAllDevices() {
+    return new TreeSet<>(registeredDevices.values());
   }
 
   private @NotNull NetworkDevice buildDevice(

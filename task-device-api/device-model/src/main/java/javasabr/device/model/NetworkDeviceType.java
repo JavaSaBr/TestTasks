@@ -14,9 +14,9 @@ import org.jetbrains.annotations.Nullable;
 @Accessors(fluent = true)
 @RequiredArgsConstructor
 public enum NetworkDeviceType {
-  ACCESS_POINT("Access Point"),
   GATEWAY("Gateway"),
-  SWITCH("Switch");
+  SWITCH("Switch"),
+  ACCESS_POINT("Access Point");
 
   private static final Map<String, NetworkDeviceType> LABEL_TO_ENUM = Arrays
       .stream(NetworkDeviceType.values())

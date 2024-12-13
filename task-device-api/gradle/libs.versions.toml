@@ -1,0 +1,42 @@
+[versions]
+reactor = "3.7.0"
+jackson = "2.18.2"
+spring = '6.2.0'
+springboot = "3.4.0"
+spock = "2.4-M4-groovy-4.0"
+groovy = "4.0.24"
+lombok = "1.18.36"
+jetbrains-annotations = "26.0.1"
+ip-adress = "5.5.1"
+
+[libraries]
+reactor-core = { module = "io.projectreactor:reactor-core", version.ref = "reactor" }
+lombok = { module = "org.projectlombok:lombok", version.ref = "lombok" }
+jetbrains-annotations = { module = "org.jetbrains:annotations", version.ref = "jetbrains-annotations" }
+
+jackson-annotations = { module = "com.fasterxml.jackson.core:jackson-annotations", version.ref = "jackson" }
+jackson-databind = { module = "com.fasterxml.jackson.core:jackson-databind", version.ref = "jackson" }
+jackson-datatype-jdk8 = { module = "com.fasterxml.jackson.datatype:jackson-datatype-jdk8", version.ref = "jackson" }
+jackson-datatype-jsr310 = { module = "com.fasterxml.jackson.datatype:jackson-datatype-jsr310", version.ref = "jackson" }
+jackson-module-parameter-names = { module = "com.fasterxml.jackson.module:jackson-module-parameter-names", version.ref = "jackson" }
+jackson-module-blackbird = { module = "com.fasterxml.jackson.module:jackson-module-blackbird", version.ref = "jackson" }
+
+spring-context = { module = "org.springframework:spring-context", version.ref = "spring" }
+spring-test = { module = "org.springframework:spring-test", version.ref = "spring" }
+
+springboot-actuator = { module = "org.springframework.boot:spring-boot-starter-actuator", version.ref = "springboot" }
+springboot-starter-webflux = { module = "org.springframework.boot:spring-boot-starter-webflux", version.ref = "springboot" }
+springboot-starter-reactor-netty = { module = "org.springframework.boot:spring-boot-starter-reactor-netty", version.ref = "springboot" }
+springboot-starter-test = { module = "org.springframework.boot:spring-boot-starter-test", version.ref = "springboot" }
+
+spock-core = { module = "org.spockframework:spock-core", version.ref = "spock" }
+spock-spring = { module = "org.spockframework:spock-spring", version.ref = "spock" }
+
+groovy-all = { module = "org.apache.groovy:groovy-all", version.ref = "groovy" }
+
+ip-adress = { module = "com.github.seancfoley:ipaddress", version.ref = "ip-adress" }
+
+[bundles]
+jackson = ["jackson-annotations", "jackson-databind", "jackson-datatype-jdk8", "jackson-datatype-jsr310", "jackson-module-parameter-names", "jackson-module-blackbird"]
+springboot-starter-reactive = ["springboot-starter-webflux", "springboot-starter-reactor-netty", "springboot-actuator"]
+spock = ["spock-core", "spock-spring"]

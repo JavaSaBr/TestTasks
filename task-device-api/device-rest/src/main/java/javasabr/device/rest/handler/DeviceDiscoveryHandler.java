@@ -2,6 +2,7 @@ package javasabr.device.rest.handler;
 
 import static javasabr.device.rest.DeviceRestConstants.PV_MAC_ADDRESS;
 
+import java.util.List;
 import javasabr.device.model.NetworkDevice;
 import javasabr.device.service.DeviceService;
 import javasabr.device.rest.DeviceFieldsValidator;
@@ -20,7 +21,17 @@ public class DeviceDiscoveryHandler {
   private final @NotNull DeviceFieldsValidator deviceFieldsValidator;
 
   public @NotNull Mono<ServerResponse> getAllRegisteredDevices(@NotNull ServerRequest request) {
-    return null;
+
+    List<NetworkDeviceDto> result = deviceService
+        .getAllDevices()
+        .stream()
+        .map(NetworkDeviceDto::from)
+        .toList();
+
+    return ServerResponse
+        .ok()
+        .contentType(MediaType.APPLICATION_JSON)
+        .bodyValue(result);
   }
 
   public @NotNull Mono<ServerResponse> getRegisteredDevice(@NotNull ServerRequest request) {
