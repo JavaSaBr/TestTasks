@@ -13,9 +13,4 @@ public class GatewayNetworkDevice extends NetworkDevice {
   public @NotNull NetworkDeviceType type() {
     return NetworkDeviceType.GATEWAY;
   }
-
-  @Override
-  public boolean canConnectTo(@NotNull NetworkDevice uplink) {
-    return !(uplink instanceof AccessPointNetworkDevice);
-  }
 }

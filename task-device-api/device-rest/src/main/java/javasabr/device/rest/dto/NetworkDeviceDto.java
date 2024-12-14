@@ -1,39 +1,16 @@
 package javasabr.device.rest.dto;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import javasabr.device.model.NetworkDevice;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-@Getter
-@EqualsAndHashCode
-public class NetworkDeviceDto {
+public record NetworkDeviceDto(
+    @NotNull String macAddress,
+    @NotNull String type,
+    @Nullable String uplinkMacAddress) {
 
   public static @NotNull NetworkDeviceDto from(@NotNull NetworkDevice networkDevice) {
     var deviceType = networkDevice.type();
-    return new NetworkDeviceDto(
-        networkDevice.macAddress(),
-        deviceType.label(),
-        networkDevice.uplinkMacAddress());
-  }
-
-  private final @NotNull String macAddress;
-  private final @NotNull String type;
-  private final @Nullable String uplinkMacAddress;
-
-  @JsonCreator
-  public NetworkDeviceDto(@NotNull String macAddress, @NotNull String type, @Nullable String uplinkMacAddress) {
-    this.macAddress = macAddress;
-    this.type = type;
-    this.uplinkMacAddress = uplinkMacAddress;
-  }
-
-  @NotNull
-  @Override
-  public String toString() {
-    return "{" + "macAddress='" + macAddress + '\'' + ", type='" + type + '\'' + ", uplinkMacAddress='"
-        + uplinkMacAddress + '\'' + '}';
+    return new NetworkDeviceDto(networkDevice.macAddress(), deviceType.label(), networkDevice.uplinkMacAddress());
   }
 }

@@ -23,18 +23,20 @@ public class DeviceRestRoutingConfig {
       @NotNull DeviceDiscoveryHandler deviceDiscoveryHandler) {
     return RouterFunctions
         .route()
-        .path("/device", builder -> builder
-            .POST("/{deviceType}/{macAddress}", deviceRegisterHandler::register)
-            .POST("/{deviceType}/{macAddress}/", deviceRegisterHandler::register)
-            .POST("/{deviceType}/{macAddress}/{uplinkMacAddress}", deviceRegisterHandler::registerConnected)
+        .path("/device", device -> device
+            .path("{deviceType}/{macAddress}", deviceTypeAndMac -> deviceTypeAndMac
+                .POST("", deviceRegisterHandler::register)
+                .POST("/", deviceRegisterHandler::register)
+                .POST("/{uplinkMacAddress}", deviceRegisterHandler::registerConnected)
+                .POST("/{uplinkMacAddress}/", deviceRegisterHandler::registerConnected))
             .GET("/{macAddress}", accept(MediaType.APPLICATION_JSON), deviceDiscoveryHandler::getRegisteredDevice)
             .GET("/{macAddress}/", accept(MediaType.APPLICATION_JSON), deviceDiscoveryHandler::getRegisteredDevice))
         .GET("/devices", accept(MediaType.APPLICATION_JSON), deviceDiscoveryHandler::getAllRegisteredDevices)
+        .GET("/devices/", accept(MediaType.APPLICATION_JSON), deviceDiscoveryHandler::getAllRegisteredDevices)
         .path("/topology", builder -> builder
             .GET("", accept(MediaType.APPLICATION_JSON), deviceDiscoveryHandler::getFullTopology)
+            .GET("/", accept(MediaType.APPLICATION_JSON), deviceDiscoveryHandler::getFullTopology)
             .GET("/{macAddress}", accept(MediaType.APPLICATION_JSON), deviceDiscoveryHandler::getDeviceTopology))
-       // .GET("/topology", deviceDiscoveryHandler::getFullTopology)
-       // .GET("/topology/{macAddress}", deviceDiscoveryHandler::getDeviceTopology)
         .build();
   }
 }

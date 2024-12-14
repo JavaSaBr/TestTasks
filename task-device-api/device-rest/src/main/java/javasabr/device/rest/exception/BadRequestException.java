@@ -2,10 +2,11 @@ package javasabr.device.rest.exception;
 
 import org.jetbrains.annotations.NotNull;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.server.ResponseStatusException;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
-public class BadRequestException extends ResponseStatusException {
+@ResponseStatus(HttpStatus.BAD_REQUEST)
+public class BadRequestException extends RuntimeException {
   public BadRequestException(@NotNull String message) {
-    super(HttpStatus.BAD_REQUEST, message);
+    super(message);
   }
 }

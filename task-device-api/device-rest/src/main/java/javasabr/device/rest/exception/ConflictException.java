@@ -2,10 +2,11 @@ package javasabr.device.rest.exception;
 
 import org.jetbrains.annotations.NotNull;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.server.ResponseStatusException;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
-public class ConflictException extends ResponseStatusException {
+@ResponseStatus(HttpStatus.CONFLICT)
+public class ConflictException extends RuntimeException {
   public ConflictException(@NotNull String message) {
-    super(HttpStatus.CONFLICT, message);
+    super(message);
   }
 }

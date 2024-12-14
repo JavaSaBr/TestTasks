@@ -1,6 +1,8 @@
 apply plugin: "java-library"
 
 dependencies {
-    api projects.deviceModel
-    api libs.spring.context
+  api projects.deviceModel
+  api libs.spring.context
+
+  testImplementation projects.testSupport
 }

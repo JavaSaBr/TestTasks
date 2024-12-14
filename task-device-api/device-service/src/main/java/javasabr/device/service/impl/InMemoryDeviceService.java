@@ -19,7 +19,7 @@ import javasabr.device.model.TopologyNode;
 import javasabr.device.model.TopologyTree;
 import javasabr.device.service.DeviceService;
 import javasabr.device.service.exception.DeviceIsAlreadyRegisteredException;
-import javasabr.device.service.exception.UnupportedUplinkException;
+import javasabr.device.service.exception.UnsupportedUplinkException;
 import javasabr.device.service.exception.UplinkDeviceNotFoundException;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -48,7 +48,7 @@ public class InMemoryDeviceService implements DeviceService {
     NetworkDevice newDevice = buildDevice(type, macAddress, uplinkMacAddress);
 
     if (uplinkDevice != null && !newDevice.canConnectTo(uplinkDevice)) {
-      throw new UnupportedUplinkException("Device:[" + macAddress + "] cannot connect to [" + uplinkMacAddress + ".");
+      throw new UnsupportedUplinkException("Device:[" + macAddress + "] cannot connect to [" + uplinkMacAddress + ".");
     }
 
     NetworkDevice alreadyRegistered = registeredDevices.putIfAbsent(macAddress, newDevice);

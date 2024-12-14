@@ -13,9 +13,4 @@ public class SwitchNetworkDevice extends NetworkDevice {
   public @NotNull NetworkDeviceType type() {
     return NetworkDeviceType.SWITCH;
   }
-
-  @Override
-  public boolean canConnectTo(@NotNull NetworkDevice uplink) {
-    return !(uplink instanceof AccessPointNetworkDevice);
-  }
 }

@@ -1,68 +1,79 @@
 buildscript {
-    repositories {
-        maven {
-            url "https://plugins.gradle.org/m2/"
-        }
+  repositories {
+    maven {
+      url "https://plugins.gradle.org/m2/"
     }
-    dependencies {
-        classpath "org.springframework.boot:spring-boot-gradle-plugin:3.4.0"
-    }
+  }
+  dependencies {
+    classpath "org.springframework.boot:spring-boot-gradle-plugin:3.4.0"
+  }
 }
 
 allprojects {
-    plugins.apply("java")
-    plugins.apply("groovy")
-    
-    repositories {
-        mavenCentral()
+  plugins.apply("java")
+  plugins.apply("groovy")
+  plugins.apply("jacoco")
+
+  repositories {
+    mavenCentral()
+  }
+
+  java {
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
+
+    test {
+      useJUnitPlatform()
+
+      failFast = false
+      maxParallelForks = 1
+      minHeapSize = "128m"
+      maxHeapSize = "1024m"
+
+      finalizedBy jacocoTestReport
+
+      systemProperty("junit.jupiter.execution.parallel.enabled", true)
+      systemProperty("junit.jupiter.execution.parallel.mode.default", "concurrent")
+      systemProperty("junit.jupiter.execution.parallel.mode.classes.default", "concurrent")
     }
-    
-    java {
-        sourceCompatibility = JavaVersion.VERSION_21
-        targetCompatibility = JavaVersion.VERSION_21
-        
-        test {
-            useJUnitPlatform()
-            
-            failFast = false
-            maxParallelForks = 1
-            minHeapSize = "128m"
-            maxHeapSize = "1024m"
-            
-            systemProperty("junit.jupiter.execution.parallel.enabled", true)
-            systemProperty("junit.jupiter.execution.parallel.mode.default", "concurrent")
-            systemProperty("junit.jupiter.execution.parallel.mode.classes.default", "concurrent")
-        }
-        
-        sourceSets {
-            test {
-                java {
-                    srcDirs 'src/test/groovy'
-                }
-            }
-        }
-        
-        tasks.withType(JavaCompile).configureEach {
-            options.compilerArgs += ["-parameters"]
-            options.encoding = "UTF-8"
-        }
-        
-        tasks.withType(GroovyCompile).configureEach {
-            options.encoding = "UTF-8"
-        }
+
+    jacocoTestReport {
+      reports {
+        xml.required = false
+        csv.required = false
+      }
+      dependsOn test
     }
-    
-    dependencies {
-        compileOnly libs.jetbrains.annotations
-        testCompileOnly libs.jetbrains.annotations
-        compileOnly libs.lombok
-        annotationProcessor libs.lombok
-        testCompileOnly libs.lombok
-        testAnnotationProcessor libs.lombok
+
+    sourceSets {
+      test {
+        java {
+          srcDirs 'src/test/groovy'
+        }
+      }
     }
+
+    tasks.withType(JavaCompile).configureEach {
+      options.compilerArgs += ["-parameters"]
+      options.encoding = "UTF-8"
+    }
+
+    tasks.withType(GroovyCompile).configureEach {
+      options.encoding = "UTF-8"
+    }
+  }
+
+  dependencies {
+    compileOnly libs.jetbrains.annotations
+    testCompileOnly libs.jetbrains.annotations
+    compileOnly libs.lombok
+    annotationProcessor libs.lombok
+    testCompileOnly libs.lombok
+    testAnnotationProcessor libs.lombok
+  }
 }
 
 wrapper {
-    gradleVersion = '8.11.1'
-    distributionType = Wrapper.DistributionType.ALL
+  gradleVersion = '8.11.1'
+  distributionType = Wrapper.DistributionType.ALL
 }

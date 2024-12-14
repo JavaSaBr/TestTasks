@@ -24,7 +24,7 @@ public abstract class NetworkDevice implements Comparable<NetworkDevice> {
   public abstract @NotNull NetworkDeviceType type();
 
   public boolean canConnectTo(@NotNull NetworkDevice uplink) {
-    return true;
+    return !(uplink instanceof AccessPointNetworkDevice);
   }
 
   @Override
