@@ -3,6 +3,8 @@ package javasabr.device.service;
 import java.util.SortedSet;
 import javasabr.device.model.NetworkDevice;
 import javasabr.device.model.NetworkDeviceType;
+import javasabr.device.model.TopologyNode;
+import javasabr.device.model.TopologyTree;
 import javasabr.device.service.exception.DeviceIsAlreadyRegisteredException;
 import javasabr.device.service.exception.UplinkDeviceNotFoundException;
 import org.jetbrains.annotations.NotNull;
@@ -25,4 +27,11 @@ public interface DeviceService {
   @Nullable NetworkDevice getByMacAddress(@NotNull String macAddress);
 
   @NotNull SortedSet<NetworkDevice> getAllDevices();
+
+  @NotNull TopologyTree buildFullTopology();
+
+  /**
+   * @return null is such device does not exist
+   */
+  @Nullable TopologyNode buildDeviceTopology(@NotNull String macAddress);
 }

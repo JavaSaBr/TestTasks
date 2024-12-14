@@ -17,7 +17,6 @@ import org.springframework.context.annotation.Import;
 @Configuration(proxyBeanMethods = false)
 public class DeviceRestHandlersConfig {
 
-
   @Bean
   public DeviceDiscoveryHandler deviceDiscoveryHandler(
       @NotNull DeviceService deviceService,

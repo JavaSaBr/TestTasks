@@ -25,11 +25,16 @@ public class DeviceRestRoutingConfig {
         .route()
         .path("/device", builder -> builder
             .POST("/{deviceType}/{macAddress}", deviceRegisterHandler::register)
+            .POST("/{deviceType}/{macAddress}/", deviceRegisterHandler::register)
             .POST("/{deviceType}/{macAddress}/{uplinkMacAddress}", deviceRegisterHandler::registerConnected)
-            .GET("/{macAddress}", accept(MediaType.APPLICATION_JSON), deviceDiscoveryHandler::getRegisteredDevice))
-        .GET("/devices", deviceDiscoveryHandler::getAllRegisteredDevices)
-        .GET("/topology", deviceDiscoveryHandler::getFullTopology)
-        .GET("/topology/{macAddress}", deviceDiscoveryHandler::getDeviceTopology)
+            .GET("/{macAddress}", accept(MediaType.APPLICATION_JSON), deviceDiscoveryHandler::getRegisteredDevice)
+            .GET("/{macAddress}/", accept(MediaType.APPLICATION_JSON), deviceDiscoveryHandler::getRegisteredDevice))
+        .GET("/devices", accept(MediaType.APPLICATION_JSON), deviceDiscoveryHandler::getAllRegisteredDevices)
+        .path("/topology", builder -> builder
+            .GET("", accept(MediaType.APPLICATION_JSON), deviceDiscoveryHandler::getFullTopology)
+            .GET("/{macAddress}", accept(MediaType.APPLICATION_JSON), deviceDiscoveryHandler::getDeviceTopology))
+       // .GET("/topology", deviceDiscoveryHandler::getFullTopology)
+       // .GET("/topology/{macAddress}", deviceDiscoveryHandler::getDeviceTopology)
         .build();
   }
 }

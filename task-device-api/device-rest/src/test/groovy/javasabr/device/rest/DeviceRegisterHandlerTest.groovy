@@ -141,17 +141,25 @@ class DeviceRegisterHandlerTest extends RestSpecification {
         deviceType << [
           NetworkDeviceType.SWITCH.label(),
           NetworkDeviceType.SWITCH.label(),
+          NetworkDeviceType.ACCESS_POINT.label(),
+          NetworkDeviceType.GATEWAY.label(),
         ]
         macAddress << [
           "79:c5:89:f5:ba:c5",
           "79:c5:89:f5:ba:c5",
+          "08:26:f7:ac:47:1c",
+          "5f:42:27:b1:c6:f6",
         ]
         uplinkMacAddress << [
           "6e:50:0c:89:8b:2a",
-          "invalid"
+          "invalid",
+          "",
+          "08:26:f7:ac:47:1c",
         ]
         expectedStatus << [
           HttpStatus.BAD_REQUEST,
+          HttpStatus.BAD_REQUEST,
+          HttpStatus.CREATED,
           HttpStatus.BAD_REQUEST,
         ]
   }

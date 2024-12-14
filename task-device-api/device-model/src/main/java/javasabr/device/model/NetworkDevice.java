@@ -1,6 +1,7 @@
 package javasabr.device.model;
 
 import java.util.Comparator;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.Accessors;
@@ -10,6 +11,7 @@ import org.jetbrains.annotations.Nullable;
 @Getter
 @Accessors(fluent = true)
 @RequiredArgsConstructor
+@EqualsAndHashCode(of = "macAddress")
 public abstract class NetworkDevice implements Comparable<NetworkDevice> {
 
   private static final Comparator<NetworkDevice> BASE_COMPARATOR = Comparator
@@ -28,5 +30,11 @@ public abstract class NetworkDevice implements Comparable<NetworkDevice> {
   @Override
   public int compareTo(@NotNull NetworkDevice another) {
     return BASE_COMPARATOR.compare(this, another);
+  }
+
+  @NotNull
+  @Override
+  public String toString() {
+    return type() + "{" + "macAddress='" + macAddress + '\'' + ", uplinkMacAddress='" + uplinkMacAddress + '\'' + '}';
   }
 }

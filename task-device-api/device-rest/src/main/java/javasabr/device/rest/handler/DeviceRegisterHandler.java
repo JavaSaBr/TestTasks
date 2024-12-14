@@ -15,6 +15,7 @@ import javasabr.device.rest.DeviceFieldsValidator;
 import javasabr.device.rest.DeviceRestConstants;
 import javasabr.device.rest.exception.BadRequestException;
 import javasabr.device.rest.exception.ConflictException;
+import javasabr.device.service.exception.UnupportedUplinkException;
 import javasabr.device.service.exception.UplinkDeviceNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
@@ -66,6 +67,8 @@ public class DeviceRegisterHandler {
       return Mono.error(new ConflictException("Device: '%s' is already registered.".formatted(macAddress)));
     } catch (UplinkDeviceNotFoundException e) {
       return Mono.error(new BadRequestException("Uplink device: '%s' is not found.".formatted(uplinkMacAddress)));
+    } catch (UnupportedUplinkException e) {
+      return Mono.error(new BadRequestException("Uplink device: '%s' is not supported.".formatted(uplinkMacAddress)));
     }
 
     return ServerResponse

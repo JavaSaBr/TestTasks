@@ -4,6 +4,8 @@ import static javasabr.device.rest.DeviceRestConstants.PV_MAC_ADDRESS;
 
 import java.util.List;
 import javasabr.device.model.NetworkDevice;
+import javasabr.device.model.TopologyNode;
+import javasabr.device.rest.dto.TopologyNodeDto;
 import javasabr.device.service.DeviceService;
 import javasabr.device.rest.DeviceFieldsValidator;
 import javasabr.device.rest.dto.NetworkDeviceDto;
@@ -53,10 +55,40 @@ public class DeviceDiscoveryHandler {
   }
 
   public @NotNull Mono<ServerResponse> getFullTopology(@NotNull ServerRequest request) {
-    return null;
+
+    List<TopologyNodeDto> roots = deviceService
+        .buildFullTopology()
+        .roots()
+        .stream()
+        .map(TopologyNodeDto::from)
+        .toList();
+
+    var builder = ServerResponse
+        .ok()
+        .contentType(MediaType.APPLICATION_JSON);
+
+    if (roots.size() == 1) {
+      return builder.bodyValue(roots.getFirst());
+    }
+
+    return builder.bodyValue(roots);
   }
 
   public @NotNull Mono<ServerResponse> getDeviceTopology(@NotNull ServerRequest request) {
-    return null;
+
+    String rawMacAddress = request.pathVariable(PV_MAC_ADDRESS);
+    String macAddress = deviceFieldsValidator.validateAndNormalizeMacAddress(rawMacAddress);
+    TopologyNode topology = deviceService.buildDeviceTopology(macAddress);
+
+    if (topology == null) {
+      return ServerResponse
+          .notFound()
+          .build();
+    }
+
+    return ServerResponse
+        .ok()
+        .contentType(MediaType.APPLICATION_JSON)
+        .bodyValue(TopologyNodeDto.from(topology));
   }
 }
