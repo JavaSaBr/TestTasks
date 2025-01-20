@@ -1,0 +1,12 @@
+[versions]
+spock = "2.4-M4-groovy-4.0"
+groovy = "4.0.24"
+jetbrains-annotations = "26.0.1"
+
+[libraries]
+jetbrains-annotations = { module = "org.jetbrains:annotations", version.ref = "jetbrains-annotations" }
+spock-core = { module = "org.spockframework:spock-core", version.ref = "spock" }
+groovy-all = { module = "org.apache.groovy:groovy-all", version.ref = "groovy" }
+
+[bundles]
+spock = ["spock-core"]
